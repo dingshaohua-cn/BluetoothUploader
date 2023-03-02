@@ -18,11 +18,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="扫描蓝牙" />
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="停止扫描" />
 
         <TextView
             android:layout_marginTop="10dp"
@@ -39,6 +34,7 @@
         <ListView
             android:overScrollMode="never"
             android:layout_width="360dp"
+            android:layout_gravity="center"
             android:layout_height="200dp"
             android:background="@color/material_dynamic_neutral0"
             android:padding="10dp"

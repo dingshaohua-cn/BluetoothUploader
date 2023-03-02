@@ -1,18 +1,24 @@
 package com.example.bluetoothuploader;
 
 import static com.example.bluetoothuploader.Utils.*;
+
 import android.Manifest;
 import android.bluetooth.*;
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private final int PermissionsCode_BlueScan = 0;
@@ -25,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextView statusDom;
+    private Button btnDom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,26 +50,23 @@ public class MainActivity extends AppCompatActivity {
 
         statusDom = findViewById(R.id.status);
 
-        // 定义和注册广播
+        // 定义和注册广播（用于接受经典蓝牙的扫描）
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);//注册广播接收信号
         registerReceiver(bluetoothReceiver, intentFilter);//用BroadcastReceiver 来取得结果
 
         // 点击开始扫描
-        Button btn = findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnDom = findViewById(R.id.button);
+        btnDom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 开始扫描
-                connectionList.clear();
-                doDiscover(true);
-            }
-        });
-        // 停止扫描
-        Button btn1 = findViewById(R.id.button1);
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doDiscover(false);
+                Log.i(TAG, "onClick: "+btnDom.getText());
+                if(btnDom.getText().equals("扫描蓝牙")){
+                    // 开始扫描
+                    connectionList.clear();
+                    doDiscover(true);
+                }else {
+                    doDiscover(false);
+                }
             }
         });
 
@@ -91,13 +96,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            Log.d(TAG, "registerBtConnect action : " + intent.getStringExtra("status"));
+
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
                     BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -111,22 +114,40 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
+                if(!bluetoothAdapter.isDiscovering()){
+                    statusDom.setText("扫描结束");
+                    btnDom.setText("扫描蓝牙");
+                    handler.removeCallbacks(runnable);
+                }
+            }
+            //要做的事情，这里再次调用此Runnable对象，以实现每1秒实现一次的定时器操作
+            handler.postDelayed(this, 1000);
+        }
+    };
 
-
+    BluetoothAdapter bluetoothAdapter;
     private void doDiscover(Boolean status) {
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();  // 获得蓝牙适配器对象
+        bluetoothAdapter = bluetoothManager.getAdapter();  // 获得蓝牙适配器对象
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "startDiscover: 经典扫描");
             statusDom.setText("扫描中...");
-            if(status){
+            if (status) {
+                btnDom.setText("停止扫描");
                 // 如果不调用cancelDiscovery主动停止扫描的话，最多扫描12s
                 bluetoothAdapter.startDiscovery();
-            }else{
+            } else {
+                btnDom.setText("扫描蓝牙");
                 bluetoothAdapter.cancelDiscovery();
             }
+            handler.postDelayed(runnable, 2000);
         }
-
     }
 
 }
