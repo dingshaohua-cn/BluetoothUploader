@@ -11,17 +11,20 @@
         android:padding="4dp"
         tools:ignore="MissingConstraints">
         <TextView
-            android:layout_width="160dp"
+            android:textAlignment="textStart"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/name"
             android:textColor="@color/white"
+            android:layout_weight="1"
             />
         <TextView
             android:textAlignment="textEnd"
-            android:layout_width="140dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/adds"
             android:textColor="@color/white"
+            android:layout_weight="1"
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

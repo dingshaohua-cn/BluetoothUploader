@@ -7,10 +7,10 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="409dp"
+        android:layout_width="wrap_content"
         android:layout_height="600dp"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
         <Button
@@ -19,26 +19,33 @@
             android:layout_height="wrap_content"
             android:text="扫描蓝牙" />
 
-        <TextView
+        <LinearLayout
             android:layout_marginTop="10dp"
-            android:layout_width="360dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/status"
-            android:text="未扫描"
-            android:padding="10dp"
+            android:layout_width="wrap_content"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:background="@color/design_default_color_primary"
-            />
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_height="wrap_content">
 
-        <ListView
-            android:overScrollMode="never"
-            android:layout_width="360dp"
-            android:layout_gravity="center"
-            android:layout_height="200dp"
-            android:background="@color/material_dynamic_neutral0"
-            android:padding="10dp"
-            android:id="@+id/list_view">
-        </ListView>
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/design_default_color_primary"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="未扫描"
+                android:textColor="@color/white" />
+
+            <ListView
+                android:id="@+id/list_view"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:background="@color/material_dynamic_neutral0"
+                android:overScrollMode="never"
+                android:padding="10dp"/>
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
