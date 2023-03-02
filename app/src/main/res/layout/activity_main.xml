@@ -19,9 +19,20 @@
             android:layout_height="wrap_content"
             android:text="扫描蓝牙" />
 
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/status"
+            android:text="暂未扫描"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:background="@color/design_default_color_primary"
+            />
+
         <ListView
             android:overScrollMode="never"
-            android:layout_marginTop="10dp"
             android:layout_width="360dp"
             android:layout_height="200dp"
             android:background="@color/material_dynamic_neutral0"

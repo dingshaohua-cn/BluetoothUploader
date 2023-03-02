@@ -1,26 +1,16 @@
 package com.example.bluetoothuploader;
 
 import static com.example.bluetoothuploader.Utils.*;
-
 import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.bluetooth.*;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,20 +21,31 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Connection> connectionList = new ArrayList<>();
 
+    private ConnectionAdapter adapter;
+
+
+    private TextView statusDom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 初始化列表视图
+        adapter = new ConnectionAdapter(MainActivity.this, R.layout.son_layout, connectionList);
+        ListView listView = (ListView) findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
+
         // 动态获取权限
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT};
         ActivityCompat.requestPermissions(MainActivity.this, permissions, PermissionsCode_BlueScan);
+
 
         Button btn = findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 开始扫描
+                connectionList.clear();
                 startDiscover();
 
                 // 定义广播和处理广播消息
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 registerReceiver(bluetoothReceiver, intentFilter);//用BroadcastReceiver 来取得结果
             }
         });
+
+        statusDom = findViewById(R.id.status);
     }
 
     /**
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -87,10 +92,9 @@ public class MainActivity extends AppCompatActivity {
                     BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                     Connection connection = new Connection(device.getName() == null ? "匿名" : device.getName(), device.getAddress());
                     connectionList.add(connection);
+                    // 异步更新数据
+                    adapter.notifyDataSetChanged();
 
-                    ConnectionAdapter adapter = new ConnectionAdapter(MainActivity.this, R.layout.son_layout, connectionList);
-                    ListView listView = (ListView) findViewById(R.id.list_view);
-                    listView.setAdapter(adapter);
                 }
             }
         }
@@ -102,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "startDiscover: 经典扫描");
+            statusDom.setText("扫描中...");
             bluetoothAdapter.startDiscovery();
         }
 
