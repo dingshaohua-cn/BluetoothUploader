@@ -24,7 +24,7 @@
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:id="@+id/status"
-            android:text="暂未扫描"
+            android:text="未扫描"
             android:padding="10dp"
             android:gravity="center"
             android:textColor="@color/black"
