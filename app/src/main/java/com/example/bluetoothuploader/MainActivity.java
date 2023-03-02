@@ -40,21 +40,31 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(MainActivity.this, permissions, PermissionsCode_BlueScan);
 
 
+        statusDom = findViewById(R.id.status);
+
+        // 定义和注册广播
+        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);//注册广播接收信号
+        registerReceiver(bluetoothReceiver, intentFilter);//用BroadcastReceiver 来取得结果
+
+        // 点击开始扫描
         Button btn = findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 开始扫描
                 connectionList.clear();
-                startDiscover();
-
-                // 定义广播和处理广播消息
-                IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);//注册广播接收信号
-                registerReceiver(bluetoothReceiver, intentFilter);//用BroadcastReceiver 来取得结果
+                doDiscover(true);
+            }
+        });
+        // 停止扫描
+        Button btn1 = findViewById(R.id.button1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doDiscover(false);
             }
         });
 
-        statusDom = findViewById(R.id.status);
     }
 
     /**
@@ -87,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            Log.d(TAG, "registerBtConnect action : " + intent.getStringExtra("status"));
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
                     BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -101,13 +112,19 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-    private void startDiscover() {
+
+    private void doDiscover(Boolean status) {
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
+        BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();  // 获得蓝牙适配器对象
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "startDiscover: 经典扫描");
             statusDom.setText("扫描中...");
-            bluetoothAdapter.startDiscovery();
+            if(status){
+                // 如果不调用cancelDiscovery主动停止扫描的话，最多扫描12s
+                bluetoothAdapter.startDiscovery();
+            }else{
+                bluetoothAdapter.cancelDiscovery();
+            }
         }
 
     }
