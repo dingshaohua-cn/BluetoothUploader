@@ -11,14 +11,10 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private final int PermissionsCode_BlueScan = 0;
@@ -32,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter;
     private TextView statusDom;
     private Button btnDom;
+    private EditText macDom;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ConnectionAdapter(MainActivity.this, R.layout.son_layout, connectionList);
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(adapter);
+        macDom =findViewById(R.id.macDom);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                Connection connect = connectionList.get(position);
+                macDom.setText(connect.getAdds());
+            }
+
+        });
 
         // 动态获取权限
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT};
