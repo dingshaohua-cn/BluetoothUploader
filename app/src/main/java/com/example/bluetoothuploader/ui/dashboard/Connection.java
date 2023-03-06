@@ -1,4 +1,4 @@
-package com.example.bluetoothuploader;
+package com.example.bluetoothuploader.ui.dashboard;
 
 public class Connection {
     private String name;

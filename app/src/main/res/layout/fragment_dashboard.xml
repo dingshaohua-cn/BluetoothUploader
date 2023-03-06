@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.dashboard.DashboardFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:ignore="MissingConstraints">
+
+        <!--        配置1-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#D2F5FB"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+            <!--  标题-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/teal_200"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight ="1"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="配置蓝牙监听目标"
+                    android:textColor="@color/white" />
+
+                <LinearLayout
+                    android:gravity="right"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+                    <TextView
+                        android:id="@+id/status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未扫描"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:layout_marginTop="-2dp"
+                        android:id="@+id/refresh"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/refresh" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <!--            列表-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <ListView
+                    android:id="@+id/list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:background="@color/material_dynamic_neutral0"
+                    android:overScrollMode="never"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginTop="6dp"
+                    android:background="#FFFFFF"
+                    android:id="@+id/macDom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入或选择蓝牙MAC "
+                    android:inputType="text"
+                    style="@style/myCustomIptStyle"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--        配置2-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="#D2F5FB"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/teal_200"
+                android:padding="10dp"
+                android:text="配置发送服务器"
+                android:textColor="@color/white" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="AppId" />
+
+                    <EditText
+                        style="@style/myCustomIptStyle"
+                        android:id="@+id/appId"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:hint="请输入 "
+                        android:inputType="text"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="AppKey" />
+
+                    <EditText
+                        style="@style/myCustomIptStyle"
+                        android:id="@+id/appKey"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:hint="请输入 "
+                        android:inputType="text"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Api地址" />
+
+                    <EditText
+                        style="@style/myCustomIptStyle"
+                        android:id="@+id/api"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:hint="请输入 "
+                        android:inputType="text"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <Button
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:id="@+id/btnSave"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:background="#36B154"
+            android:textColor="@color/white"
+            android:text="保存" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

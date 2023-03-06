@@ -1,4 +1,4 @@
-package com.example.bluetoothuploader;
+package com.example.bluetoothuploader.ui.dashboard;
 
 import java.util.HashMap;
 import java.util.Map;
