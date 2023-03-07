@@ -16,8 +16,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // leancloud 增加自动签名的内容
+//    signingConfigs {
+//        config {
+//            keyAlias '{your key alias}'
+//            keyPassword '{your key password}'
+//            storeFile file('{your store file full name}')
+//            storePassword '{your store password}'
+//        }
+//    }
+
     buildTypes {
+        debug {
+            // leancloud 增加签名设置 仅第一行
+//            signingConfig signingConfigs.config
+        }
         release {
+            // leancloud 增加签名设置  仅第一行
+//            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -43,4 +59,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    // leancloud 依赖
+    implementation 'cn.leancloud:storage-android:8.2.18'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 }

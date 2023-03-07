@@ -16,6 +16,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.bluetoothuploader.databinding.ActivityMainBinding;
 
+import cn.leancloud.LeanCloud;
+
 public class MainActivity extends AppCompatActivity {
     private final int PermissionsCode_BlueScan = 0;
 
@@ -29,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
         // 动态获取权限
         String[] permissions = {Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT};
         ActivityCompat.requestPermissions(this, permissions, PermissionsCode_BlueScan);
+
+
+        // 提供 this、App ID、绑定的自定义 API 域名作为参数
+        LeanCloud.initializeSecurely(this, "0XxTqBqbDxa7F3tXQvLJGKsR-gzGzoHsz", "https://0xxtqbqb.lc-cn-n1-shared.com");
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
