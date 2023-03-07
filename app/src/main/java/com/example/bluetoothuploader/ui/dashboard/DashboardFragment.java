@@ -56,6 +56,7 @@ public class DashboardFragment extends Fragment {
 
     private RotateAnimation animation = goRotate();
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         activity = getActivity();
@@ -88,10 +89,12 @@ public class DashboardFragment extends Fragment {
 
         // 蓝牙扫描按钮dom
         imageDom = root.findViewById(R.id.refresh);
-        imageDom.setOnClickListener(new View.OnClickListener() {
+        View rightActionDom = root.findViewById(R.id.rightAction);
+
+        rightActionDom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(statusDom.getText().equals("未扫描")){
+                if(statusDom.getText().equals("开始扫描")){
                     // 开始扫描
                     connectionList.clear();
                     doDiscover(true);
@@ -158,7 +161,7 @@ public class DashboardFragment extends Fragment {
             // TODO Auto-generated method stub
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
                 if (!bluetoothAdapter.isDiscovering()) {
-                    statusDom.setText("未扫描");
+                    statusDom.setText("开始扫描");
                     animation.cancel();
                     handler.removeCallbacks(runnable);
                 }
@@ -179,12 +182,13 @@ public class DashboardFragment extends Fragment {
         bluetoothAdapter = bluetoothManager.getAdapter();  // 获得蓝牙适配器对象
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "startDiscover: 经典扫描");
-            statusDom.setText("扫描中...");
             if (status) {
+                statusDom.setText("停止扫描");
                 Log.i(TAG, "doDiscover: "+"开始动画");
                 imageDom.startAnimation(animation);
                 bluetoothAdapter.startDiscovery(); // 如果不调用cancelDiscovery主动停止扫描的话，最多扫描12s
             } else {
+                statusDom.setText("开始扫描");
                 bluetoothAdapter.cancelDiscovery();
                 animation.cancel();
             }

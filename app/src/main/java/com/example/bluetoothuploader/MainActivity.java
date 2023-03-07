@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         // 提供 this、App ID、绑定的自定义 API 域名作为参数
-        LeanCloud.initializeSecurely(this, "0XxTqBqbDxa7F3tXQvLJGKsR-gzGzoHsz", "https://0xxtqbqb.lc-cn-n1-shared.com");
+        //        LeanCloud.initializeSecurely(this, "0XxTqBqbDxa7F3tXQvLJGKsR-gzGzoHsz", "https://0xxtqbqb.lc-cn-n1-shared.com");
+        LeanCloud.initialize(this, "0XxTqBqbDxa7F3tXQvLJGKsR-gzGzoHsz","96avIapLREM9OBqhttD72a3g", "https://0xxtqbqb.lc-cn-n1-shared.com");
 
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     String permissionStatus = permissionResult == PackageManager.PERMISSION_GRANTED ? "开启  " : "关闭  ";
                     str += permissionName + ": " + permissionStatus;
                 }
-                Toast.makeText(MainActivity.this, str, Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, str, Toast.LENGTH_LONG).show();
                 break;
         }
     }

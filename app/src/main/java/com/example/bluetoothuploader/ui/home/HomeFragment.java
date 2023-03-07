@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment {
         startBtnDom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveData();
                 addNotification();
             }
         });
@@ -77,6 +78,7 @@ public class HomeFragment extends Fragment {
 
             public void onError(Throwable throwable) {
                 // 异常处理
+                Log.i("aaaaa", "保存失败。objectId：" + throwable.getMessage());
             }
 
             public void onComplete() {

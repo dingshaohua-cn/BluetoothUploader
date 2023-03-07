@@ -17,23 +17,23 @@ android {
     }
 
     // leancloud 增加自动签名的内容
-//    signingConfigs {
-//        config {
-//            keyAlias '{your key alias}'
-//            keyPassword '{your key password}'
-//            storeFile file('{your store file full name}')
-//            storePassword '{your store password}'
-//        }
-//    }
+    signingConfigs {
+        config {
+            keyAlias 'test'
+            keyPassword 'testtest'
+            storeFile file('D:\\code\\BluetoothUploader\\key-store.jks')
+            storePassword 'testtest'
+        }
+    }
 
     buildTypes {
         debug {
             // leancloud 增加签名设置 仅第一行
-//            signingConfig signingConfigs.config
+            signingConfig signingConfigs.config
         }
         release {
             // leancloud 增加签名设置  仅第一行
-//            signingConfig signingConfigs.config
+            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

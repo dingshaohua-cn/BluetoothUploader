@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="0dp"
         tools:ignore="MissingConstraints">
 
         <!--        配置1-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#D2F5FB"
+            android:background="#F2F6F6"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="20dp">
@@ -25,7 +25,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/teal_200"
+                android:background="@color/wechat"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0dp"
@@ -36,6 +36,7 @@
                     android:textColor="@color/white" />
 
                 <LinearLayout
+                    android:id="@+id/rightAction"
                     android:gravity="right"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -45,7 +46,7 @@
                         android:id="@+id/status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="未扫描"
+                        android:text="开始扫描"
                         android:textColor="@color/white" />
 
                     <ImageView
@@ -77,12 +78,12 @@
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="6dp"
                     android:layout_marginTop="6dp"
-                    android:background="#FFFFFF"
                     android:id="@+id/macDom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="请输入或选择蓝牙MAC "
                     android:inputType="text"
+                    android:background="@drawable/rounded_editview"
                     style="@style/myCustomIptStyle"/>
             </LinearLayout>
         </LinearLayout>
@@ -91,8 +92,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:background="#D2F5FB"
+            android:layout_marginTop="0dp"
+            android:background="#F2F6F6"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="20dp">
@@ -100,7 +101,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/teal_200"
+                android:background="@color/wechat"
                 android:padding="10dp"
                 android:text="配置发送服务器"
                 android:textColor="@color/white" />
@@ -133,6 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:hint="请输入 "
+                        android:background="@drawable/rounded_editview"
                         android:inputType="text"
                         android:textColor="@color/black" />
                 </LinearLayout>
@@ -165,6 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:hint="请输入 "
+                        android:background="@drawable/rounded_editview"
                         android:inputType="text"
                         android:textColor="@color/black" />
                 </LinearLayout>
@@ -198,21 +201,53 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:hint="请输入 "
+                        android:background="@drawable/rounded_editview"
                         android:inputType="text"
                         android:textColor="@color/black" />
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="同步频率" />
+
+                    <EditText
+                        style="@style/myCustomIptStyle"
+                        android:id="@+id/timer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:hint="默认10秒 "
+                        android:background="@drawable/rounded_editview"
+                        android:inputType="text"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <Button
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:id="@+id/btnSave"
-            android:layout_width="160dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:background="#36B154"
+            android:background="@color/wechat"
             android:textColor="@color/white"
             android:text="保存" />
 

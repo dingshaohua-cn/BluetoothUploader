@@ -2,7 +2,7 @@
 <resources>
     <style name="myCustomIptStyle">
         <item name="android:color">#1F2022</item>
-        <item name="android:background">#FFFFFF</item>
+<!--        <item name="android:background">#FFFFFF</item>-->
         <item name="android:padding">10dp</item>
     </style>
 </resources>
