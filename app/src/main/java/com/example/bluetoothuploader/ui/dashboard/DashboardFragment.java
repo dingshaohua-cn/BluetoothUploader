@@ -2,6 +2,8 @@ package com.example.bluetoothuploader.ui.dashboard;
 
 
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -11,6 +13,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,6 +59,8 @@ public class DashboardFragment extends Fragment {
 
     private RotateAnimation animation = goRotate();
 
+    private SharedPreferences sp;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -68,7 +73,7 @@ public class DashboardFragment extends Fragment {
         adapter = new ConnectionAdapter(activity, R.layout.son_layout, connectionList);
         ListView listView = root.findViewById(R.id.list_view);
         listView.setAdapter(adapter);
-        macDom = root.findViewById(R.id.macDom);
+        macDom = root.findViewById(R.id.mac);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -104,13 +109,59 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        //本地存储： 获取SharedPreferences对象
+        sp = activity.getSharedPreferences("SP", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        // 保存按钮点击
         View btnSaveDom = root.findViewById(R.id.btnSave);
+        EditText appIdIpt = root.findViewById(R.id.appId);
+        EditText appKeyIpt = root.findViewById(R.id.appKey);
+        EditText appApiIpt = root.findViewById(R.id.appApi);
+        EditText macIpt = root.findViewById(R.id.mac);
+        EditText timerIpt = root.findViewById(R.id.timer);
         btnSaveDom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(activity, "保存成功", Toast.LENGTH_SHORT).show();
+                String appIdIptStr = appIdIpt.getText().toString();
+                String appKeyIptStr = appKeyIpt.getText().toString();
+                String appApiIptStr = appApiIpt.getText().toString();
+                String timerIptStr = timerIpt.getText().toString();
+                String macIptStr = macIpt.getText().toString();
+                if(appIdIptStr.equals("")){
+                    Toast.makeText(activity, "请输入appId", Toast.LENGTH_SHORT).show();
+                } else if (appKeyIptStr.equals("")) {
+                    Toast.makeText(activity, "请输入appKey", Toast.LENGTH_SHORT).show();
+                } else if (appApiIptStr.equals("")) {
+                    Toast.makeText(activity, "请输入appApi", Toast.LENGTH_SHORT).show();
+                } else{
+                    editor.putString("appId", appIdIptStr);
+                    editor.putString("appKey", appKeyIptStr);
+                    editor.putString("appApi", appApiIptStr);
+                    // 这两个不是必填的
+                    editor.putString("timer", timerIptStr);
+                    editor.putString("mac", macIptStr);
+                    editor.commit();
+                    Toast.makeText(activity, "保存成功", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+        // 软件重启 需要还原上次的输入
+        String appId = sp.getString("appId", "");
+        String appKey = sp.getString("appKey", "");
+        String appApi = sp.getString("appApi", "");
+        String mac = sp.getString("mac", "");
+        String timer = sp.getString("timer", "");
+        macIpt.setText(mac);
+        appIdIpt.setText(appId);
+        appKeyIpt.setText(appKey);
+        appApiIpt.setText(appApi);
+        timerIpt.setText(timer);
+
+
+
+
         return root;
     }
 

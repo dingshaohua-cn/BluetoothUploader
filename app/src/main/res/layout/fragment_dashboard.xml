@@ -78,7 +78,7 @@
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="6dp"
                     android:layout_marginTop="6dp"
-                    android:id="@+id/macDom"
+                    android:id="@+id/mac"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="请输入或选择蓝牙MAC "
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/wechat"
                 android:padding="10dp"
-                android:text="配置发送服务器"
+                android:text="配置上报服务器"
                 android:textColor="@color/white" />
 
 
@@ -192,15 +192,15 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Api地址" />
+                        android:text="appApi" />
 
                     <EditText
                         style="@style/myCustomIptStyle"
-                        android:id="@+id/api"
+                        android:id="@+id/appApi"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:hint="请输入 "
+                        android:hint="请输入"
                         android:background="@drawable/rounded_editview"
                         android:inputType="text"
                         android:textColor="@color/black" />

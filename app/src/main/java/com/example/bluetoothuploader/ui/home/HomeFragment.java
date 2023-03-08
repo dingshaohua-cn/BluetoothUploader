@@ -1,17 +1,20 @@
 package com.example.bluetoothuploader.ui.home;
 
+import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,10 +32,15 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
-
+    private static final String TAG = "dsh";
     private static int NOTIFICATION_ID = 1;
 
     private FragmentActivity activity;
+
+    private SharedPreferences sp;
+
+    // 构建对象
+    private LCObject todo = new LCObject("Todo");
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,13 +52,32 @@ public class HomeFragment extends Fragment {
 
         activity = getActivity();
 
+        //本地存储： 获取SharedPreferences对象
+        sp = activity.getSharedPreferences("SP", MODE_PRIVATE);
 
+
+        // 点击启动事件
         View startBtnDom = root.findViewById(R.id.startBtn);
         startBtnDom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveData();
-                addNotification();
+                String appId = sp.getString("appId", "");
+                String appKey = sp.getString("appKey", "");
+                String appApi = sp.getString("appApi", "");
+                String mac = sp.getString("mac", "");
+                String timer = sp.getString("timer", "");
+
+                if(mac.equals("")){
+                    Toast.makeText(activity, "请检查蓝牙监听目标配置", Toast.LENGTH_LONG).show();;
+                } else if(appId.equals("") || appKey.equals("") || appApi.equals("")){
+                    Toast.makeText(activity, "请检查上报服务器配置", Toast.LENGTH_LONG).show();;
+                } else {
+                    // 扫描蓝牙 并上报数据
+//                    saveData();
+                    //                addNotification();
+                }
+
+
             }
         });
 
@@ -59,8 +86,7 @@ public class HomeFragment extends Fragment {
 
 
     private void saveData() {
-        // 构建对象
-        LCObject todo = new LCObject("Todo");
+
 
         // 为属性赋值
         todo.put("title", "马拉松报名");
