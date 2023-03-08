@@ -3,11 +3,18 @@ package com.example.bluetoothuploader.ui.home;
 import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.content.ContextCompat.getSystemService;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -41,6 +49,10 @@ public class HomeFragment extends Fragment {
 
     // 构建对象
     private LCObject todo = new LCObject("Todo");
+
+    private BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    // 下面使用Android5.0新增的扫描API，扫描返回的结果更友好，比如BLE广播数据以前是byte[] scanRecord，而新API帮我们解析成ScanRecord类\
+    final BluetoothLeScanner bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,11 +79,38 @@ public class HomeFragment extends Fragment {
                 String mac = sp.getString("mac", "");
                 String timer = sp.getString("timer", "");
 
-                if(mac.equals("")){
-                    Toast.makeText(activity, "请检查蓝牙监听目标配置", Toast.LENGTH_LONG).show();;
-                } else if(appId.equals("") || appKey.equals("") || appApi.equals("")){
-                    Toast.makeText(activity, "请检查上报服务器配置", Toast.LENGTH_LONG).show();;
+                if (mac.equals("")) {
+                    Toast.makeText(activity, "请检查蓝牙监听目标配置", Toast.LENGTH_LONG).show();
+                    ;
+                } else if (appId.equals("") || appKey.equals("") || appApi.equals("")) {
+                    Toast.makeText(activity, "请检查上报服务器配置", Toast.LENGTH_LONG).show();
+                    ;
                 } else {
+                    if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
+                        bluetoothLeScanner.startScan(new ScanCallback() {
+                            @Override
+                            public void onScanResult(int callbackType, ScanResult result) {
+                                super.onScanResult(callbackType, result);
+                                BluetoothDevice dev = result.getDevice(); // 获取BLE设备信息
+                                if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+                                    String address =  dev.getAddress();
+                                    if(!address.equals(null)){
+                                        if(mac.equals(address)){
+                                            byte[] scanRecord = result.getScanRecord().getBytes();
+                                            Log.i(TAG, "onScanResult: " +dev.getName());
+                                            Log.i(TAG, "onScanResult: " +address);
+//                                            Log.i(TAG, "onScanResult: " +result.getRssi());
+                                            Log.i(TAG, "onScanResult: " +scanRecord);
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+                        });
+                    }
+
                     // 扫描蓝牙 并上报数据
 //                    saveData();
                     //                addNotification();
