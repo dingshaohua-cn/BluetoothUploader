@@ -4,6 +4,9 @@ package com.example.bluetoothuploader.ui.dashboard;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.bluetoothuploader.utils.ScreenMode.fullScreenMode;
+import static com.example.bluetoothuploader.utils.ScreenMode.stopFullScreenMode;
+
 import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -33,6 +36,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+
 import com.example.bluetoothuploader.R;
 import com.example.bluetoothuploader.databinding.FragmentDashboardBinding;
 import java.util.ArrayList;
@@ -67,7 +71,6 @@ public class DashboardFragment extends Fragment {
         activity = getActivity();
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-
 
         // 初始化扫描到的蓝牙列表视图
         adapter = new ConnectionAdapter(activity, R.layout.son_layout, connectionList);

@@ -1,13 +1,13 @@
 package com.example.bluetoothuploader;
 
 
-import static com.example.bluetoothuploader.utils.Dic.getPermissionZh;
+import static com.example.bluetoothuploader.utils.DicHelper.getPermissionZh;
+import static com.example.bluetoothuploader.utils.ScreenMode.fullScreenMode;
 
 import android.Manifest;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.widget.Toast;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getSupportActionBar().hide();  //隐藏nav的标题栏（导航栏模板自带的）
+        fullScreenMode(this); // 隐藏状态栏
 
         // 动态获取权限
         String[] permissions = {Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT};

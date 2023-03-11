@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2F6F6"
     tools:context=".ui.dashboard.DashboardFragment">
 
     <LinearLayout
@@ -12,7 +13,12 @@
         android:orientation="vertical"
         android:padding="0dp"
         tools:ignore="MissingConstraints">
-
+        <LinearLayout
+            android:layout_height="30dp"
+            android:layout_width="match_parent"
+            android:background="@color/wechat"
+            android:orientation="horizontal">
+        </LinearLayout>
         <!--        配置1-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,9 +81,6 @@
                     android:padding="10dp" />
 
                 <EditText
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_marginTop="6dp"
                     android:id="@+id/mac"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -243,11 +246,12 @@
 
         <Button
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/btnSave"
-            android:layout_width="200dp"
+            android:letterSpacing="01"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:background="@color/wechat"
+            android:background="@drawable/shape"
             android:textColor="@color/white"
             android:text="保存" />
 
